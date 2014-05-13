@@ -14,17 +14,16 @@ datetime<-as.POSIXct(strptime(datetime, "%Y-%m-%d %H:%M:%S"))
 plotData<-cbind(plotData, datetime)
 
 ##Create and save plot
-png(file = "plot2.png", height = 480, width = 480)
-with(plotData, plot(datetime, Global_active_power, 
-                    type="l", xlab= " ",ylab= "Global Active Power (kilowatts)"))
+png(file = "plot3.png", height = 480, width = 480)
+##Plot first line and then add other lines
+plot(plotData$datetime, plotData$Sub_metering_1, col="black",
+     type="l", xlab= " ",
+     ylab= "Energy sub metering")
+lines(x=plotData$datetime, y=plotData$Sub_metering_2, col="red")
+lines(x=plotData$datetime, y=plotData$Sub_metering_3, col="blue")
+legend("topright", cex=0.8, lty=1, col=c("black","red", "blue"),
+       legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
 
 dev.off()
 
-with(plotData, plot(datetime, Sub_metering_1, col="black",
-                    type="l", xlab= " ",
-                    ylab= "Energy sub metering"))
-plot(plotData$datetime, plotData$Sub_metering_1, col="black",
-                          type="l", xlab= " ",
-                          ylab= "Energy sub metering")
-lines(x=plotData$datetime, y=plotData$Sub_metering_2, col="red")
-lines(x=plotData$datetime, y=plotData$Sub_metering_3, col="blue")
+
